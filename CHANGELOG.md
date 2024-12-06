@@ -7,11 +7,11 @@ and this project adheres to [Semantic Versioning].
 
 ## [Unreleased]
 
-## [1.0.0] - 2024-11-19
+## [0.1.24340] - 2024-12-06
 
-### Added to 1.0.0
+### Changed in 0.1.24340
 
-- Initial
+- `senzingsdk-tools=4.0.0-24340`
 
 [Keep a Changelog]: https://keepachangelog.com/en/1.0.0/
 [markdownlint]: https://dlaa.me/markdownlint/
