@@ -10,15 +10,17 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: get repo name
+      - name: Get repo name
         id: repo-basename
         run: |
           echo "repo=$(basename ${{ github.repository }})" >> "$GITHUB_OUTPUT"
         shell: bash
 
-      - name: build docker image
+      - name: Build docker image
         uses: senzing-factory/github-action-docker-buildx-build@v1
         with:
+          build-options: "-q --build-arg SENZING_APT_INSTALL_PACKAGE=senzingsdk-runtime --build-arg SENZING_APT_REPOSITORY_NAME=${{ secrets.SENZING_APT_BETA_STAGING_REPOSITORY_PACKAGE }}  --build-arg SENZING_APT_REPOSITORY_URL=${{ secrets.SENZING_APT_BETA_STAGING_REPOSITORY_URL }}"
           image-repository: senzing/${{ steps.repo-basename.outputs.repo }}
+          image-tag: ${{ github.ref_name }}
           password: ${{ secrets.DOCKERHUB_ACCESS_TOKEN }}
           username: ${{ secrets.DOCKERHUB_USERNAME }}
