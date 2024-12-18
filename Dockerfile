@@ -1,9 +1,9 @@
-ARG BASE_IMAGE=senzing/senzingsdk-runtime:0.1.24340
+ARG BASE_IMAGE=senzing/senzingsdk-runtime
 
 # Create the runtime image.
 
 ARG SENZING_ACCEPT_EULA="I_ACCEPT_THE_SENZING_EULA"
-ARG SENZING_APT_INSTALL_TOOLS_PACKAGE="senzingsdk-tools=4.0.0-24340"
+ARG SENZING_APT_INSTALL_TOOLS_PACKAGE="senzingsdk-tools"
 
 # -----------------------------------------------------------------------------
 # Stage: builder
@@ -97,9 +97,9 @@ ENV PATH="/app/venv/bin:${PATH}"
 
 ENV LANGUAGE=C \
     LC_ALL=C.UTF-8 \
-    LD_LIBRARY_PATH=/opt/senzing/g2/lib \
-    PATH=${PATH}:/opt/senzing/g2/python \
-    PYTHONPATH=/opt/senzing/g2/python:/opt/senzing/g2/sdk/python \
+    LD_LIBRARY_PATH=/opt/senzing/er/lib \
+    PATH=${PATH}:/opt/senzing/er/python \
+    PYTHONPATH=/opt/senzing/er/python:/opt/senzing/er/sdk/python \
     PYTHONUNBUFFERED=1 \
     SENZING_DOCKER_LAUNCHED=true \
     SENZING_SKIP_DATABASE_PERFORMANCE_TEST=true
