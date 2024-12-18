@@ -1,7 +1,6 @@
 name: docker push containers to dockerhub and ecr
 
 on:
-  workflow_dispatch:
   push:
     tags:
       - "[0-9]+.[0-9]+.[0-9]+"
@@ -20,7 +19,7 @@ jobs:
       DOCKERHUB_USERNAME: ${{ secrets.DOCKERHUB_USERNAME }}
     uses: senzing-factory/build-resources/.github/workflows/docker-push-containers-to-dockerhub-and-ecr.yaml@v2
     with:
-      build-options: "-q --push --build-arg SENZING_APT_INSTALL_PACKAGE=senzingsdk-runtime --build-arg SENZING_APT_REPOSITORY_NAME=${{ secrets.SENZING_APT_BETA_REPOSITORY_PACKAGE }}  --build-arg SENZING_APT_REPOSITORY_URL=${{ secrets.SENZING_APT_BETA_REPOSITORY_URL }}"
+      build-options: "--push"
       docker-image-repository: senzing/senzingsdk-tools
       ecr-image-repository: senzing/senzingsdk-tools
       image-tag: ${{ github.ref_name }}
