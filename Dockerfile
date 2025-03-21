@@ -19,12 +19,12 @@ USER root
 
 # Install packages via apt-get.
 
-RUN apt-get update \
- && apt-get -y install \
-        python3 \
-        python3-dev \
-        python3-pip \
-        python3-venv \
+RUN apt-get update -qqq \
+ && apt-get -yqqq install \
+      python3 \
+      python3-dev \
+      python3-pip \
+      python3-venv \
  && apt-get clean \
  && rm -rf /var/lib/apt/lists/*
 
@@ -70,16 +70,16 @@ ENV TERM=xterm
 
 # Install Senzing package.
 
-RUN apt-get update \
- && apt-get -y install ${SENZING_APT_INSTALL_TOOLS_PACKAGE}
+RUN apt-get update -qqq \
+ && apt-get -yqqq install ${SENZING_APT_INSTALL_TOOLS_PACKAGE}
 
 HEALTHCHECK CMD apt list --installed | grep senzingsdk-tools
 
 # Install packages via apt.
 
-RUN apt-get update \
- && apt-get -y install \
-        python3-venv \
+RUN apt-get update -qqq \
+ && apt-get -yqqq install \
+      python3-venv \
  && rm -rf /var/lib/apt/lists/*
 
 # Copy python virtual environment from the builder image.
