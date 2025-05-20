@@ -28,7 +28,7 @@ jobs:
             SENZING_APT_REPOSITORY_NAME=${{ secrets.SENZING_APT_BETA_REPOSITORY_PACKAGE }}
             SENZING_APT_REPOSITORY_URL=${{ secrets.SENZING_APT_BETA_REPOSITORY_URL }}
           image-repository: senzing/${{ steps.repo-basename.outputs.repo }}
-          image-tag: ${{ github.ref_name }}
+          image-tag: latest
           password: ${{ secrets.DOCKERHUB_ACCESS_TOKEN }}
           push: true
           sign-image: true

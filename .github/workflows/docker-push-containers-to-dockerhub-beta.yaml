@@ -9,7 +9,7 @@ permissions:
   id-token: write
 
 jobs:
-  docker-push-containers-to-dockerhub:
+  docker-push-containers-to-dockerhub-beta:
     outputs:
       status: ${{ job.status }}
     runs-on: ubuntu-latest
@@ -27,18 +27,18 @@ jobs:
           build-options: |
             SENZING_APT_REPOSITORY_NAME=${{ secrets.SENZING_APT_BETA_STAGING_REPOSITORY_PACKAGE }}
             SENZING_APT_REPOSITORY_URL=${{ secrets.SENZING_APT_BETA_STAGING_REPOSITORY_URL }}
-          image-repository: senzing/${{ steps.repo-basename.outputs.repo }}
-          image-tag: ${{ github.ref_name }}
+          image-repository: senzing/${{ steps.repo-basename.outputs.repo }}-beta
+          image-tag: latest
           password: ${{ secrets.DOCKERHUB_ACCESS_TOKEN }}
           push: true
           sign-image: true
           username: ${{ secrets.DOCKERHUB_USERNAME }}
 
   slack-notification:
-    needs: [docker-push-containers-to-dockerhub]
-    if: ${{ always() && contains(fromJSON('["failure", "cancelled"]'), needs.docker-push-containers-to-dockerhub.outputs.status) }}
+    needs: [docker-push-containers-to-dockerhub-beta]
+    if: ${{ always() && contains(fromJSON('["failure", "cancelled"]'), needs.docker-push-containers-to-dockerhub-beta.outputs.status) }}
     secrets:
       SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
     uses: senzing-factory/build-resources/.github/workflows/build-failure-slack-notification.yaml@v2
     with:
-      job-status: ${{ needs.docker-push-containers-to-dockerhub.outputs.status }}
+      job-status: ${{ needs.docker-push-containers-to-dockerhub-beta.outputs.status }}
