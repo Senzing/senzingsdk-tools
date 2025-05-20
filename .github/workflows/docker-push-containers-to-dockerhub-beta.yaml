@@ -1,9 +1,7 @@
-name: docker push containers to dockerhub and ecr
+name: docker push containers to dockerhub - beta
 
 on:
-  push:
-    tags:
-      - "[0-9]+.[0-9]+.[0-9]+"
+  workflow_dispatch:
 
 permissions:
   attestations: write
@@ -11,33 +9,36 @@ permissions:
   id-token: write
 
 jobs:
-  docker-push-containers-to-dockerhub-and-ecr:
+  docker-push-containers-to-dockerhub:
     outputs:
       status: ${{ job.status }}
     runs-on: ubuntu-latest
 
     steps:
+      - name: Get repo name
+        id: repo-basename
+        run: |
+          echo "repo=$(basename ${{ github.repository }})" >> "$GITHUB_OUTPUT"
+        shell: bash
+
       - name: Build docker image and push to DockerHub
         uses: senzing-factory/github-action-docker-buildx-build@v2
         with:
           build-options: |
             SENZING_APT_REPOSITORY_NAME=${{ secrets.SENZING_APT_BETA_STAGING_REPOSITORY_PACKAGE }}
             SENZING_APT_REPOSITORY_URL=${{ secrets.SENZING_APT_BETA_STAGING_REPOSITORY_URL }}
-          image-repository: senzing/senzingsdk-tools
+          image-repository: senzing/${{ steps.repo-basename.outputs.repo }}
           image-tag: ${{ github.ref_name }}
-          login-to-ecr: true
           password: ${{ secrets.DOCKERHUB_ACCESS_TOKEN }}
           push: true
-          role-session-name: GitHub_to_AWS_via_FederatedOIDC
-          role-to-assume: arn:aws:iam::${{ secrets.AWS_DOCKER_ACCOUNT_ID }}:role/github-actions-ecr-push
           sign-image: true
           username: ${{ secrets.DOCKERHUB_USERNAME }}
 
   slack-notification:
-    needs: [docker-push-containers-to-dockerhub-and-ecr]
-    if: ${{ always() && contains(fromJSON('["failure", "cancelled"]'), needs.docker-push-containers-to-dockerhub-and-ecr.outputs.status) }}
+    needs: [docker-push-containers-to-dockerhub]
+    if: ${{ always() && contains(fromJSON('["failure", "cancelled"]'), needs.docker-push-containers-to-dockerhub.outputs.status) }}
     secrets:
       SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
     uses: senzing-factory/build-resources/.github/workflows/build-failure-slack-notification.yaml@v2
     with:
-      job-status: ${{ needs.docker-push-containers-to-dockerhub-and-ecr.outputs.status }}
+      job-status: ${{ needs.docker-push-containers-to-dockerhub.outputs.status }}
