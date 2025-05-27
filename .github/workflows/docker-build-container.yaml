@@ -4,6 +4,8 @@ on:
   pull_request:
     branches:
       - main
+  schedule:
+    - cron: "15 7 * * *"
   workflow_dispatch:
 
 permissions:
@@ -11,6 +13,8 @@ permissions:
 
 jobs:
   docker-build-container:
+    outputs:
+      status: ${{ job.status }}
     runs-on: ubuntu-latest
 
     steps:
@@ -30,3 +34,12 @@ jobs:
           image-tag: ${{ github.ref_name }}
           password: ${{ secrets.DOCKERHUB_ACCESS_TOKEN }}
           username: ${{ secrets.DOCKERHUB_USERNAME }}
+
+  slack-notification:
+    needs: [docker-build-container]
+    if: ${{ always() && contains(fromJSON('["failure", "cancelled"]'), needs.docker-build-container.outputs.status ) && (github.ref_name == github.event.repository.default_branch || github.event_name == 'schedule') }}
+    secrets:
+      SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
+    uses: senzing-factory/build-resources/.github/workflows/build-failure-slack-notification.yaml@v2
+    with:
+      job-status: ${{ needs.docker-build-container.outputs.status }}
