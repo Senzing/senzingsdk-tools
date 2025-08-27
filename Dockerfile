@@ -1,4 +1,4 @@
-ARG BASE_IMAGE=senzing/senzingsdk-runtime
+ARG BASE_IMAGE=senzing/senzingsdk-runtime:4.0.0
 
 # Create the runtime image.
 
@@ -11,7 +11,7 @@ ARG SENZING_APT_INSTALL_TOOLS_PACKAGE="senzingsdk-tools"
 
 FROM ${BASE_IMAGE} AS builder
 
-ENV REFRESHED_AT=2024-12-06
+ENV REFRESHED_AT=2025-08-27
 
 # Run as "root" for system installation.
 
@@ -29,6 +29,7 @@ RUN apt-get update -qqq \
  && rm -rf /var/lib/apt/lists/*
 
 # Create and activate virtual environment.
+
 RUN python3 -m venv /app/venv
 ENV PATH="/app/venv/bin:$PATH"
 
@@ -48,7 +49,7 @@ RUN pip3 install --upgrade pip \
 
 FROM ${BASE_IMAGE} AS runner
 
-ENV REFRESHED_AT=2024-12-06
+ENV REFRESHED_AT=2025-08-27
 
 ARG SENZING_ACCEPT_EULA
 ARG SENZING_APT_INSTALL_TOOLS_PACKAGE
