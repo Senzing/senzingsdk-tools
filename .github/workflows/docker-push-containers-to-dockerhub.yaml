@@ -1,7 +1,9 @@
 name: docker push containers to dockerhub
 
 on:
-  workflow_dispatch:
+  push:
+    tags:
+      - "[0-9]+.[0-9]+.[0-9]+"
 
 permissions:
   attestations: write
@@ -28,7 +30,7 @@ jobs:
             SENZING_APT_REPOSITORY_NAME=${{ vars.SENZING_APT_BETA_REPOSITORY_PACKAGE }}
             SENZING_APT_REPOSITORY_URL=${{ vars.SENZING_APT_BETA_REPOSITORY_URL }}
           image-repository: senzing/${{ steps.repo-basename.outputs.repo }}
-          image-tag: latest
+          image-tag: ${{ github.ref_name }}
           password: ${{ secrets.DOCKERHUB_ACCESS_TOKEN }}
           push: true
           sign-image: true
