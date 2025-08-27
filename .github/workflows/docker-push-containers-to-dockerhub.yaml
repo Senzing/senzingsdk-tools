@@ -25,8 +25,8 @@ jobs:
         uses: senzing-factory/github-action-docker-buildx-build@v2
         with:
           build-options: |
-            SENZING_APT_REPOSITORY_NAME=${{ secrets.SENZING_APT_BETA_REPOSITORY_PACKAGE }}
-            SENZING_APT_REPOSITORY_URL=${{ secrets.SENZING_APT_BETA_REPOSITORY_URL }}
+            SENZING_APT_REPOSITORY_NAME=${{ vars.SENZING_APT_BETA_REPOSITORY_PACKAGE }}
+            SENZING_APT_REPOSITORY_URL=${{ vars.SENZING_APT_BETA_REPOSITORY_URL }}
           image-repository: senzing/${{ steps.repo-basename.outputs.repo }}
           image-tag: latest
           password: ${{ secrets.DOCKERHUB_ACCESS_TOKEN }}
