@@ -11,7 +11,7 @@ ARG SENZING_APT_INSTALL_TOOLS_PACKAGE="senzingsdk-tools"
 
 FROM ${BASE_IMAGE} AS builder
 
-ENV REFRESHED_AT=2024-12-06
+ENV REFRESHED_AT=2025-08-01
 
 # Run as "root" for system installation.
 
