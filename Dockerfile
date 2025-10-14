@@ -2,7 +2,6 @@ ARG BASE_IMAGE=senzing/senzingsdk-runtime:4.0.0@sha256:332d2ff9f00091a6d57b5b469
 
 # Create the runtime image.
 
-ARG SENZING_ACCEPT_EULA="I_ACCEPT_THE_SENZING_EULA"
 ARG SENZING_APT_INSTALL_TOOLS_PACKAGE="senzingsdk-tools"
 
 # -----------------------------------------------------------------------------
@@ -20,13 +19,16 @@ USER root
 # Install packages via apt-get.
 
 RUN apt-get update \
- && apt-get -y --no-install-recommends install \
+  && apt-get -y --no-install-recommends install \
       python3 \
       python3-dev \
       python3-pip \
       python3-venv \
- && apt-get clean \
- && rm -rf /var/lib/apt/lists/*
+  && apt-get clean \
+  && rm -rf /var/lib/apt/lists/* \
+  && rm -rf /tmp/* \
+  && rm -rf /var/tmp/* \
+  && rm -rf ~/.cache
 
 # Create and activate virtual environment.
 
@@ -36,10 +38,10 @@ ENV PATH="/app/venv/bin:$PATH"
 # Install packages via PIP.
 
 COPY requirements.txt .
-RUN pip3 install --upgrade pip \
- && pip3 install -r requirements.txt \
+RUN pip3 install --no-cache-dir --upgrade pip \
+ && pip3 install --no-cache-dir -r requirements.txt \
  && rm requirements.txt \
- && pip3 uninstall -y setuptools pip
+ && pip3 uninstall -y setuptools pip wheel
 
 # -----------------------------------------------------------------------------
 # Stage: Final
@@ -51,11 +53,9 @@ FROM ${BASE_IMAGE} AS runner
 
 ENV REFRESHED_AT=2025-08-27
 
-ARG SENZING_ACCEPT_EULA
 ARG SENZING_APT_INSTALL_TOOLS_PACKAGE
 
-ENV SENZING_ACCEPT_EULA=${SENZING_ACCEPT_EULA} \
-    SENZING_APT_INSTALL_TOOLS_PACKAGE=${SENZING_APT_INSTALL_TOOLS_PACKAGE}
+ENV SENZING_APT_INSTALL_TOOLS_PACKAGE=${SENZING_APT_INSTALL_TOOLS_PACKAGE}
 
 LABEL Name="senzing/senzingsdk-tools" \
       Maintainer="support@senzing.com" \
@@ -72,16 +72,16 @@ ENV TERM=xterm
 # Install Senzing package.
 
 RUN apt-get update \
- && apt-get -y --no-install-recommends install ${SENZING_APT_INSTALL_TOOLS_PACKAGE}
+  && apt-get -y --no-install-recommends install \
+    ${SENZING_APT_INSTALL_TOOLS_PACKAGE}\
+    python3-venv \
+  && apt-get clean \
+  && rm -rf /var/lib/apt/lists/* \
+  && rm -rf /tmp/* \
+  && rm -rf /var/tmp/* \
+  && rm -rf /var/cache/apt/*
 
 HEALTHCHECK CMD apt list --installed | grep senzingsdk-tools
-
-# Install packages via apt.
-
-RUN apt-get update \
- && apt-get -y --no-install-recommends install \
-      python3-venv \
- && rm -rf /var/lib/apt/lists/*
 
 # Copy python virtual environment from the builder image.
 
