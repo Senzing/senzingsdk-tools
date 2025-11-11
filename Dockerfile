@@ -1,4 +1,4 @@
-ARG BASE_IMAGE=senzing/senzingsdk-runtime:4.0.0@sha256:332d2ff9f00091a6d57b5b469cc60fd7dc9d0265e83d0e8c9e5296541d32a4aa
+ARG BASE_IMAGE=senzing/senzingsdk-runtime:4.1.0@sha256:e57d751dc0148bb8eeafedb7accf988413f50b54a7e46f25dfe4559d240063e5
 
 # Create the runtime image.
 
@@ -10,7 +10,7 @@ ARG SENZING_APT_INSTALL_TOOLS_PACKAGE="senzingsdk-tools"
 
 FROM ${BASE_IMAGE} AS builder
 
-ENV REFRESHED_AT=2025-08-27
+ENV REFRESHED_AT=2025-11-11
 
 # Run as "root" for system installation.
 
@@ -19,16 +19,16 @@ USER root
 # Install packages via apt-get.
 
 RUN apt-get update \
-  && apt-get -y --no-install-recommends install \
+ && apt-get -y --no-install-recommends install \
       python3 \
       python3-dev \
       python3-pip \
       python3-venv \
-  && apt-get clean \
-  && rm -rf /var/lib/apt/lists/* \
-  && rm -rf /tmp/* \
-  && rm -rf /var/tmp/* \
-  && rm -rf ~/.cache
+ && apt-get clean \
+ && rm -rf /var/lib/apt/lists/* \
+ && rm -rf /tmp/* \
+ && rm -rf /var/tmp/* \
+ && rm -rf ~/.cache
 
 # Create and activate virtual environment.
 
@@ -51,7 +51,7 @@ RUN pip3 install --no-cache-dir --upgrade pip \
 
 FROM ${BASE_IMAGE} AS runner
 
-ENV REFRESHED_AT=2025-08-27
+ENV REFRESHED_AT=2025-11-11
 
 ARG SENZING_APT_INSTALL_TOOLS_PACKAGE
 
@@ -59,7 +59,7 @@ ENV SENZING_APT_INSTALL_TOOLS_PACKAGE=${SENZING_APT_INSTALL_TOOLS_PACKAGE}
 
 LABEL Name="senzing/senzingsdk-tools" \
       Maintainer="support@senzing.com" \
-      Version="4.0.0"
+      Version="4.1.0"
 
 # Run as "root" for system installation.
 
@@ -72,14 +72,14 @@ ENV TERM=xterm
 # Install Senzing package.
 
 RUN apt-get update \
-  && apt-get -y --no-install-recommends install \
-    ${SENZING_APT_INSTALL_TOOLS_PACKAGE}\
-    python3-venv \
-  && apt-get clean \
-  && rm -rf /var/lib/apt/lists/* \
-  && rm -rf /tmp/* \
-  && rm -rf /var/tmp/* \
-  && rm -rf /var/cache/apt/*
+ && apt-get -y --no-install-recommends install \
+      ${SENZING_APT_INSTALL_TOOLS_PACKAGE}\
+      python3-venv \
+ && apt-get clean \
+ && rm -rf /var/lib/apt/lists/* \
+ && rm -rf /tmp/* \
+ && rm -rf /var/tmp/* \
+ && rm -rf /var/cache/apt/*
 
 HEALTHCHECK CMD apt list --installed | grep senzingsdk-tools
 
