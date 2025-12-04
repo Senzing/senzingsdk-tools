@@ -26,6 +26,7 @@
     "testrun",
     "TOOLSDIRECTORY",
     "toplevel",
+    "unixodbc",
     "venv",
     "yqqq"
   ],
