@@ -75,6 +75,7 @@ RUN apt-get update \
  && apt-get -y --no-install-recommends install \
       ${SENZING_APT_INSTALL_TOOLS_PACKAGE}\
       python3-venv \
+      unixodbc \
  && apt-get clean \
  && rm -rf /var/lib/apt/lists/* \
  && rm -rf /tmp/* \
