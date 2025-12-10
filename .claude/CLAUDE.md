@@ -18,21 +18,23 @@ make help            # List all available targets
 ```
 
 The build uses a multi-stage Dockerfile:
+
 - **builder stage**: Sets up Python virtual environment with dependencies
 - **runner stage**: Final image based on `senzing/senzingsdk-runtime`, installs `senzingsdk-tools` APT package
 
 ## Testing
 
 Tests run inside the Docker container via `.github/scripts/docker_test_script.sh`:
+
 - Validates required environment variables (LD_LIBRARY_PATH)
 - Verifies Senzing installation files exist
-- Checks build version matches APT package version
 
 Run tests: `make docker-build && make docker-test`
 
 ## CI/CD
 
 All CI/CD runs through GitHub Actions:
+
 - **docker-build-container.yaml**: Main build workflow (runs on PRs to main and daily)
 - **docker-push-containers-to-dockerhub.yaml**: Pushes to Docker Hub on releases
 - **spellcheck.yaml**: Runs cspell on PRs (config in `.vscode/cspell.json`)
@@ -45,6 +47,7 @@ All CI/CD runs through GitHub Actions:
 ## Python Dependencies
 
 The image includes these Python packages (see `requirements.txt`):
+
 - prettytable (table formatting)
 - psycopg2-binary (PostgreSQL driver)
 - pyodbc (ODBC database access)

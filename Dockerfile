@@ -10,7 +10,7 @@ ARG SENZING_APT_INSTALL_TOOLS_PACKAGE="senzingsdk-tools"
 
 FROM ${BASE_IMAGE} AS builder
 
-ENV REFRESHED_AT=2025-11-11
+ENV REFRESHED_AT=2025-12-10
 
 # Run as "root" for system installation.
 
@@ -51,7 +51,7 @@ RUN pip3 install --no-cache-dir --upgrade pip \
 
 FROM ${BASE_IMAGE} AS runner
 
-ENV REFRESHED_AT=2025-11-11
+ENV REFRESHED_AT=2025-12-10
 
 ARG SENZING_APT_INSTALL_TOOLS_PACKAGE
 
