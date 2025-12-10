@@ -10,7 +10,7 @@ ARG SENZING_APT_INSTALL_TOOLS_PACKAGE="senzingsdk-tools"
 
 FROM ${BASE_IMAGE} AS builder
 
-ENV REFRESHED_AT=2025-11-11
+ENV REFRESHED_AT=2025-12-10
 
 # Run as "root" for system installation.
 
@@ -41,7 +41,7 @@ COPY requirements.txt .
 RUN pip3 install --no-cache-dir --upgrade pip \
  && pip3 install --no-cache-dir -r requirements.txt \
  && rm requirements.txt \
- && pip3 uninstall -y setuptools pip wheel
+ && pip3 uninstall -y setuptools wheel
 
 # -----------------------------------------------------------------------------
 # Stage: Final
@@ -51,7 +51,7 @@ RUN pip3 install --no-cache-dir --upgrade pip \
 
 FROM ${BASE_IMAGE} AS runner
 
-ENV REFRESHED_AT=2025-11-11
+ENV REFRESHED_AT=2025-12-10
 
 ARG SENZING_APT_INSTALL_TOOLS_PACKAGE
 
@@ -87,6 +87,7 @@ HEALTHCHECK CMD apt list --installed | grep senzingsdk-tools
 # Copy python virtual environment from the builder image.
 
 COPY --from=builder /app/venv /app/venv
+RUN chmod -R a+rwX /app/venv
 
 USER 1001
 

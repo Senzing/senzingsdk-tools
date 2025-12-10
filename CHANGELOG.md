@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning].
 
 ## [Unreleased]
 
+### Changed in Unreleased
+
+- Keep pip in venv to allow Docker image to be used as a base image
+
 ## [4.1.0] - 2025-11-11
 
 ### Changed in 4.1.0
