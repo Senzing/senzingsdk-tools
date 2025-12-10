@@ -10,8 +10,6 @@ and this project adheres to [Semantic Versioning].
 ### Changed in Unreleased
 
 - Keep pip in venv to allow Docker image to be used as a base image
-- Set venv permissions to allow any user to run pip install at runtime
-- Update test script to use szBuildVersion.json (renamed from g2BuildVersion.json)
 
 ## [4.1.0] - 2025-11-11
 
