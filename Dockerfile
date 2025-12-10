@@ -41,7 +41,7 @@ COPY requirements.txt .
 RUN pip3 install --no-cache-dir --upgrade pip \
  && pip3 install --no-cache-dir -r requirements.txt \
  && rm requirements.txt \
- && pip3 uninstall -y setuptools pip wheel
+ && pip3 uninstall -y setuptools wheel
 
 # -----------------------------------------------------------------------------
 # Stage: Final
