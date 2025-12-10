@@ -7,8 +7,8 @@ if [[ -z "${LD_LIBRARY_PATH}" ]]; then
 fi
 
 # Verify that some Senzing files have been installed
-# /opt/senzing/er/g2BuildVersion.json  (log contents)
-FILE=/opt/senzing/er/g2BuildVersion.json
+# /opt/senzing/er/szBuildVersion.json  (log contents)
+FILE=/opt/senzing/er/szBuildVersion.json
 if test -f "$FILE"; then
     echo "[INFO] $FILE exists."
 else
@@ -16,8 +16,8 @@ else
     exit 1
 fi
 
-# /opt/senzing/data/libpostal/data_version
-FILE=/opt/senzing/data/libpostal/data_version
+# /opt/senzing/data/szBuildVersion.json
+FILE=/opt/senzing/data/szBuildVersion.json
 if test -f "$FILE"; then
     echo "[INFO] $FILE exists."
 else
@@ -25,17 +25,16 @@ else
     exit 1
 fi
 
-# parse /opt/senzing/er/g2BuildVersion.json, get BUILD_VERSION and compare it with SENZING_APT_INSTALL_PACKAGE="senzingsdk-runtime=4.0.0-24323" 
+# parse /opt/senzing/er/szBuildVersion.json, get BUILD_VERSION and compare it with SENZING_APT_INSTALL_PACKAGE="senzingsdk-runtime=4.0.0-24323"
 # {
 #     "PLATFORM": "Linux",
 #     "VERSION": "4.0.0",
 #     "BUILD_VERSION": "4.0.0.24318",
-#     "BUILD_NUMBER": "2024_11_13__14_22",
-#     "DATA_VERSION": "6.0.0"
+#     "BUILD_NUMBER": "2024_11_13__14_22"
 # }
 
-# check that g2build version is the same as the senzing apt installed 
-FILE=/opt/senzing/er/g2BuildVersion.json
+# check that szBuildVersion is the same as the senzing apt installed
+FILE=/opt/senzing/er/szBuildVersion.json
 if test -f "$FILE"; then
     echo "[INFO] $FILE exists."
 

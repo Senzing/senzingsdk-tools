@@ -87,7 +87,7 @@ HEALTHCHECK CMD apt list --installed | grep senzingsdk-tools
 # Copy python virtual environment from the builder image.
 
 COPY --from=builder /app/venv /app/venv
-RUN chown -R 1001:1001 /app/venv
+RUN chmod -R a+rwX /app/venv
 
 USER 1001
 
