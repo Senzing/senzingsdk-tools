@@ -6,6 +6,7 @@
     "buildx",
     "CCLA",
     "CODEOWNER",
+    "cooldown",
     "Dockerfiles",
     "dockerhub",
     "esbenp",
