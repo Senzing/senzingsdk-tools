@@ -30,7 +30,5 @@
     "venv",
     "yqqq"
   ],
-  "ignorePaths": [
-    ".git/**"
-  ]
+  "ignorePaths": [".git/**"]
 }
