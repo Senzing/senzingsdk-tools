@@ -6,6 +6,7 @@
     "buildx",
     "CCLA",
     "CODEOWNER",
+    "cooldown",
     "Dockerfiles",
     "dockerhub",
     "esbenp",
@@ -30,7 +31,5 @@
     "venv",
     "yqqq"
   ],
-  "ignorePaths": [
-    ".git/**"
-  ]
+  "ignorePaths": [".git/**"]
 }
