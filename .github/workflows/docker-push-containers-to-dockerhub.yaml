@@ -1,4 +1,4 @@
-name: docker push containers to dockerhub
+name: Docker push containers to dockerhub
 
 on:
   push:
@@ -16,6 +16,7 @@ jobs:
       contents: write
       id-token: write
     runs-on: ubuntu-latest
+    timeout-minutes: 30
 
     steps:
       - name: Free disk space
@@ -27,7 +28,7 @@ jobs:
           sudo rm -rf "$AGENT_TOOLSDIRECTORY"
           docker system prune -af
 
-      - name: Get repo name
+      - name: Get repository name
         id: repo-basename
         run: |
           echo "repo=$(basename ${{ github.repository }})" >> "$GITHUB_OUTPUT"

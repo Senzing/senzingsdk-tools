@@ -1,1 +1,1 @@
-## Errors
+# senzingsdk-tools errors

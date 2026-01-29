@@ -1,4 +1,4 @@
-ARG BASE_IMAGE=senzing/senzingsdk-runtime:4.1.0@sha256:e57d751dc0148bb8eeafedb7accf988413f50b54a7e46f25dfe4559d240063e5
+ARG BASE_IMAGE=senzing/senzingsdk-runtime:4.2.0@sha256:063a2f7514bc6ee7ad9953e035cf836ba33967fa5591c5656fa8c4c723aaae76
 
 # Create the runtime image.
 
@@ -10,7 +10,7 @@ ARG SENZING_APT_INSTALL_TOOLS_PACKAGE="senzingsdk-tools"
 
 FROM ${BASE_IMAGE} AS builder
 
-ENV REFRESHED_AT=2025-12-10
+ENV REFRESHED_AT=2026-01-29
 
 # Run as "root" for system installation.
 
@@ -23,12 +23,7 @@ RUN apt-get update \
       python3 \
       python3-dev \
       python3-pip \
-      python3-venv \
- && apt-get clean \
- && rm -rf /var/lib/apt/lists/* \
- && rm -rf /tmp/* \
- && rm -rf /var/tmp/* \
- && rm -rf ~/.cache
+      python3-venv
 
 # Create and activate virtual environment.
 
@@ -51,7 +46,7 @@ RUN pip3 install --no-cache-dir --upgrade pip \
 
 FROM ${BASE_IMAGE} AS runner
 
-ENV REFRESHED_AT=2025-12-10
+ENV REFRESHED_AT=2026-01-29
 
 ARG SENZING_APT_INSTALL_TOOLS_PACKAGE
 
@@ -59,7 +54,7 @@ ENV SENZING_APT_INSTALL_TOOLS_PACKAGE=${SENZING_APT_INSTALL_TOOLS_PACKAGE}
 
 LABEL Name="senzing/senzingsdk-tools" \
       Maintainer="support@senzing.com" \
-      Version="4.1.0"
+      Version="4.2.0"
 
 # Run as "root" for system installation.
 
