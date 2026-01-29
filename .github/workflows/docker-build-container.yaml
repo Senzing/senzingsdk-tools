@@ -1,4 +1,4 @@
-name: docker build container
+name: Docker build container
 
 on:
   pull_request:
@@ -8,15 +8,18 @@ on:
     - cron: "15 7 * * *"
   workflow_dispatch:
 
+concurrency:
+  group: ${{ github.workflow }}-${{ github.head_ref || github.ref_name }}
+  cancel-in-progress: true
+
 permissions: {}
 
 jobs:
   docker-build-container-production:
-    outputs:
-      status: ${{ job.status }}
     permissions:
       contents: read
     runs-on: ubuntu-latest
+    timeout-minutes: 30
 
     steps:
       - name: Free disk space
@@ -28,7 +31,7 @@ jobs:
           sudo rm -rf "$AGENT_TOOLSDIRECTORY"
           docker system prune -af
 
-      - name: Get repo name
+      - name: Get repository name
         id: repo-basename
         run: |
           echo "repo=$(basename ${{ github.repository }})" >> "$GITHUB_OUTPUT"
@@ -45,6 +48,8 @@ jobs:
   docker-build-container-staging:
     outputs:
       status: ${{ job.status }}
+    permissions:
+      contents: read
     runs-on: ubuntu-latest
 
     steps:
@@ -76,9 +81,9 @@ jobs:
 
   slack-notification:
     needs: [docker-build-container-production, docker-build-container-staging]
-    if: ${{ always() && (contains(fromJSON('["failure", "cancelled"]'), needs.docker-build-container-production.outputs.status ) || contains(fromJSON('["failure", "cancelled"]'), needs.docker-build-container-staging.outputs.status )) && (github.ref_name == github.event.repository.default_branch || github.event_name == 'schedule') }}
+    if: ${{ always() && (contains(fromJSON('["failure", "cancelled"]'), needs.docker-build-container-production.result ) || contains(fromJSON('["failure", "cancelled"]'), needs.docker-build-container-staging.result )) && (github.ref_name == github.event.repository.default_branch || github.event_name == 'schedule') }}
     secrets:
       SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
     uses: senzing-factory/build-resources/.github/workflows/build-failure-slack-notification.yaml@v3
     with:
-      job-status: ${{ needs.docker-build-container-production.outputs.status || needs.docker-build-container-staging.outputs.status }}
+      job-status: ${{ needs.docker-build-container-production.result || needs.docker-build-container-staging.result }}
