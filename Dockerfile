@@ -1,4 +1,4 @@
-ARG BASE_IMAGE=senzing/senzingsdk-runtime:4.2.0@sha256:063a2f7514bc6ee7ad9953e035cf836ba33967fa5591c5656fa8c4c723aaae76
+ARG BASE_IMAGE=senzing/senzingsdk-runtime:4.2.0@sha256:072ff062d9d3ee224e68848e8a37b9f4d6db9ada016fdd0313c3a5bd946df8b9
 
 # Create the runtime image.
 
