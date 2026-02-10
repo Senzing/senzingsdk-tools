@@ -9,8 +9,10 @@
     "cooldown",
     "Dockerfiles",
     "dockerhub",
+    "docktermj",
     "esbenp",
     "ICLA",
+    "kernelsam",
     "libpostal",
     "prettytable",
     "projectatomic",
@@ -31,5 +33,7 @@
     "venv",
     "yqqq"
   ],
-  "ignorePaths": [".git/**"]
+  "ignorePaths": [
+    ".git/**"
+  ]
 }
