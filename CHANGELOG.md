@@ -9,6 +9,11 @@ This project adheres to [Semantic Versioning].
 
 ### Changed in Unreleased
 
+## [4.2.1] - 2026-02-20
+
+### Changed in 4.2.1
+
+- Based on Senzing 4.2.1
 - Keep pip in venv to allow Docker image to be used as a base image
 
 ## [4.2.0] - 2026-01-29
