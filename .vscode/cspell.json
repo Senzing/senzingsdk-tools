@@ -10,10 +10,8 @@
     "Dockerfiles",
     "dockerhub",
     "docktermj",
-    "esbenp",
     "ICLA",
     "kernelsam",
-    "libpostal",
     "prettytable",
     "projectatomic",
     "psycopg",
@@ -25,13 +23,13 @@
     "senzingapi",
     "senzingsdk",
     "setuptools",
-    "stackoverflow",
     "testrun",
     "TOOLSDIRECTORY",
     "toplevel",
     "unixodbc",
-    "venv",
-    "yqqq"
+    "venv"
   ],
-  "ignorePaths": [".git/**"]
+  "ignorePaths": [
+    ".git/**"
+  ]
 }

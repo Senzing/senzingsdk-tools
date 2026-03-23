@@ -46,8 +46,6 @@ jobs:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
 
   docker-build-container-staging:
-    outputs:
-      status: ${{ job.status }}
     permissions:
       contents: read
     runs-on: ubuntu-latest
