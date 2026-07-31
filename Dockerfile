@@ -1,4 +1,4 @@
-ARG BASE_IMAGE=senzing/senzingsdk-runtime:4.3.3@sha256:505a83fc83641d65f64a8a57a1157dcfde791747952fbc8bb8d16b7c246b43ea
+ARG BASE_IMAGE=senzing/senzingsdk-runtime:4.3.4@sha256:3426be4ee9e84200e7977b7731652a4267877e4f1cc913bc3732b10f979025b7
 
 # Create the runtime image.
 
@@ -10,7 +10,7 @@ ARG SENZING_APT_INSTALL_TOOLS_PACKAGE="senzingsdk-tools"
 
 FROM ${BASE_IMAGE} AS builder
 
-ENV REFRESHED_AT=2026-07-15
+ENV REFRESHED_AT=2026-07-31
 
 # Run as "root" for system installation.
 
@@ -46,7 +46,7 @@ RUN pip3 install --no-cache-dir --upgrade pip \
 
 FROM ${BASE_IMAGE} AS runner
 
-ENV REFRESHED_AT=2026-07-15
+ENV REFRESHED_AT=2026-07-31
 
 ARG SENZING_APT_INSTALL_TOOLS_PACKAGE
 
@@ -54,7 +54,7 @@ ENV SENZING_APT_INSTALL_TOOLS_PACKAGE=${SENZING_APT_INSTALL_TOOLS_PACKAGE}
 
 LABEL Name="senzing/senzingsdk-tools" \
       Maintainer="support@senzing.com" \
-      Version="4.3.3"
+      Version="4.3.4"
 
 # Run as "root" for system installation.
 
