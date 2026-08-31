@@ -54,7 +54,7 @@ The image includes these Python packages (see `requirements.txt`):
 
 ## Docker Image Details
 
-- **Base image**: `senzing/senzingsdk-runtime:4.1.0`
+- **Base image**: `senzing/senzingsdk-runtime`, version-pinned by digest in `Dockerfile` (`BASE_IMAGE`) — see there for the current version
 - **User**: 1001 (non-root)
 - **Python venv**: `/app/venv` (added to PATH)
 - **Senzing paths**: `/opt/senzing/er/`, `/opt/senzing/data/`
