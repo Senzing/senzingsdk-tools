@@ -2,7 +2,10 @@ rules:
   unpinned-uses:
     config:
       policies:
-        "*": ref-pin
+        # Third-party actions MUST be pinned to a full commit SHA (immutable).
+        "*": hash-pin
+        # First-party reusable workflows ride the moving major tag by design.
+        "senzing-factory/*": ref-pin
   secrets-outside-env:
     ignore:
       - docker-build-container.yaml
